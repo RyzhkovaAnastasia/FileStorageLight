@@ -1,0 +1,9 @@
+﻿@model BLL.Models.ErrorModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<hgroup>
+    <h1>@Model.Title @Model.ErrorCode</h1>
+    <hr />
+    <h2>@Model.Message</h2>
+</hgroup>

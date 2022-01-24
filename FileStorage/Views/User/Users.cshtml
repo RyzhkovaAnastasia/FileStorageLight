@@ -1,0 +1,49 @@
+﻿@model IEnumerable<BLL.Models.UserModel>
+
+@{
+    ViewBag.Title = "Users";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Users accounts</h2>
+<hr />
+<p>@Html.ActionLink("Create new user", "Create", "User", null)</p>
+@if (!Model.Any())
+{
+    <h3>No users and guests </h3>
+}
+else
+{
+
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.UserName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", "User", new { userId = item.Id }, null)
+                    |
+                    @Html.ActionLink("Edit roles", "Edit", "Role", new { userId = item.Id }, null)
+                    |
+                    @Ajax.ActionLink("Delete", "Delete", "User", new { userId = item.Id }, new AjaxOptions { HttpMethod = "Post", OnSuccess = "window.location.reload()" }, new { onclick = "return confirm('Are you sure you wish to delete?');" })
+                </td>
+            </tr>
+        }
+
+    </table>
+}

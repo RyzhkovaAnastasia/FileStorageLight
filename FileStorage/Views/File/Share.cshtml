@@ -1,0 +1,45 @@
+﻿@model BLL.Models.Recipients
+@{
+    ViewBag.Title = "Share";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            $("#multiSelectDropDown").chosen();
+
+        });
+    </script>
+}
+<h2>Share @ViewBag.FileName</h2>
+
+Link for sharing: <a href=@ViewBag.ShareLink>  @ViewBag.ShareLink </a>
+<br />
+<br />
+
+@if (Model != null)
+{
+
+    using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <p>Choose users for sharing</p>
+
+        @Html.ListBoxFor(m => m.SelectedUsersId,
+            new MultiSelectList(Model.AllUsers, "Id", "UserName", Model.SelectedUsersId),
+            new { @multiple = "multiple", @id = "multiSelectDropDown", @class = "form-control", @data_placeholder = "Select users" })
+
+<div>
+    <br />
+    <p><input type="submit" value="Save" /> </p>
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" }, "Error")
+</div>
+    }
+}
+else
+{
+    <h2>No users for sharing</h2>
+}
+
+

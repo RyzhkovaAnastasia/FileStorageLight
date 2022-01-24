@@ -1,0 +1,53 @@
+﻿@model IEnumerable<BLL.Models.FileModel>
+@{
+    ViewBag.Title = "Upload";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Upload files </h2>
+<h4 class="text-info">@ViewBag.Location</h4>
+
+<hr/>
+<p class="text-warning">Max size is 100 MB</p>
+<hr/>
+
+@using (Html.BeginForm("Upload", "File", FormMethod.Post, new { enctype = "multipart/form-data", id = "Myform" }))
+{
+    @Html.AntiForgeryToken()
+<div>
+    @Html.TextBox("files", "", new { @type = "file", @multiple = "multiple" }) <br />
+    <input type="hidden" name="parentDirId" value="@ViewBag.DirectoryId" />
+    <input type="submit" value="Upload" />
+    <span class="text-success">@ViewBag.Message</span>
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" }, "Error")
+</div>
+}
+
+<br/>
+@if (Model != null && Model.Any())
+{
+    <h4>Uploaded files</h4>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Type)
+            </th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Type)
+                </td>
+            </tr>
+        }
+
+    </table>
+}

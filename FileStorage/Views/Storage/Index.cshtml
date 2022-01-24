@@ -1,0 +1,87 @@
+﻿@model BLL.Models.StorageItemsModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>My Storage</h2>
+@if (User.IsInRole("User"))
+{
+<hr />
+
+    <p>
+        @Html.ActionLink("Upload file", "Upload", "File", new { parentDirId = @Model.Id }, null)
+    </p>
+    <p>
+        @Html.ActionLink("Create new folder", "Create", "Directory", new { parentDirId = @Model.Id }, null)
+    </p>
+}
+<hr />
+@if (@Model.Directory.ParentDirectoryId != Guid.Empty)
+{
+    <h4 class="text-info">@Model.Directory.ApplicationUser.UserName: MyStorage\@Model.Directory.Location</h4>
+}
+else
+{
+<h4 class="text-info">@Model.Directory.ApplicationUser.UserName: MyStorage\</h4>
+}
+
+@if (Model.StorageItems != null && Model.StorageItems.Any() && User.IsInRole("User"))
+{
+<table class="table">
+    <tr>
+        <th>
+            Name
+        </th>
+        <th>
+            Upload date
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in @Model.StorageItems)
+    {
+<tr>
+    <td>
+        @if (item.IsFile)
+        {
+        @Html.DisplayFor(modelItem => item.Name) }
+        else
+        {
+        @Html.ActionLink(item.Name, "Index", new { itemId = item.Id })}
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.UploadDate)
+    </td>
+    <td>
+        @if (item.IsFile)
+        {
+            @Html.ActionLink("Download", "Download", "File", new { id = item.Id }, null) <span>|</span>
+            @Html.ActionLink("Share", "Share", "File", new { id = item.Id }, null) <span>|</span>
+            @Html.ActionLink("Edit", "Edit", "File", new { id = item.Id }, null) <span>|</span>
+            @Html.ActionLink("Details", "Details", "File", new { id = item.Id }, null) <span>|</span>
+            @Ajax.ActionLink("Delete", "Delete", "File", new { id = item.Id }, new AjaxOptions { HttpMethod = "Post", OnSuccess = "window.location.reload()" }, new { onclick = "return confirm('Are you sure you wish to delete?');" })
+        }
+        else
+        {
+            @Html.ActionLink("Edit", "Edit", "Directory", new { id = item.Id }, null) <span>|</span>
+            @Html.ActionLink("Details", "Details", "Directory", new { id = item.Id }, null) <span>|</span>
+            @Ajax.ActionLink("Delete", "Delete", "Directory", new { id = item.Id }, new AjaxOptions { HttpMethod = "Post", OnSuccess = "window.location.reload()" }, new { onclick = "return confirm('Are you sure you wish to delete?');" })
+        }
+    </td>
+</tr>
+    }
+
+</table> 
+}
+else
+{
+<h3>No files and folders </h3>
+}
+
+@if (!(Model.Directory.ParentDirectoryId == Guid.Empty || Model.Directory.ParentDirectoryId == null))
+{
+<p>
+    @Html.ActionLink("Back", "Index", "Storage", new { itemId = @Model.Directory?.ParentDirectoryId }, null)
+</p>
+}

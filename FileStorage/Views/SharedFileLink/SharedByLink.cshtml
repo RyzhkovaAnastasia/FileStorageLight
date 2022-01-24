@@ -1,0 +1,81 @@
+﻿@using Microsoft.AspNet.Identity;
+@model BLL.Models.FileModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@if (User.Identity.GetUserId() != Model.ApplicationUserId)
+{
+    <h2>You get the file from @Model.ApplicationUser.UserName</h2>
+}
+else
+{
+    <h2>Sharing file preview</h2>
+}
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Type)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Type)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ApplicationUser.UserName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ApplicationUser.UserName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ApplicationUser.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ApplicationUser.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        @if (Model.Description != null)
+        {
+            <dd>
+                @Html.DisplayFor(model => model.Description)
+            </dd>
+        }
+        else
+        {
+            <dd>No description</dd>
+        }
+
+    </dl>
+</div>
+@if (User.Identity.GetUserId() != Model.ApplicationUserId)
+{
+    using (Html.BeginForm("SetToAvailable", "SharedFileLink", new { id = Model.Id }))
+    {
+        @Html.AntiForgeryToken()
+        <input type="submit" value="Add to available" />
+    }
+
+<br />
+@Html.ActionLink("Download shared file", "Download", "File", new { id = Model.Id }, null)
+}
+<p>
+    @Html.ActionLink("Back", null, null, null, new {href = Request.UrlReferrer})
+</p>

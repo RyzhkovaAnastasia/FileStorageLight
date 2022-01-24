@@ -1,0 +1,52 @@
+﻿@model IEnumerable<BLL.Models.FileModel>
+
+@{
+    ViewBag.Title = "Important";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Important files</h2>
+
+@if (Model != null && Model.Any())
+{
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UploadDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Location)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UploadDate)
+                </td>
+                <td>
+                    MyStorage\@Html.DisplayFor(modelItem => item.Location)
+                </td>
+                <td>
+                    @Html.ActionLink("Download", "Download", "File", new { id = item.Id }, null) |
+                    @Html.ActionLink("Edit", "Edit", "File", new { id = item.Id }, null) |
+                    @Html.ActionLink("Details", "Details", "File", new { id = item.Id }, null) |
+                    @Html.ActionLink("Delete", "Delete", "File", new { id = item.Id }, null)
+                </td>
+            </tr>
+        }
+
+    </table>
+}
+else
+{
+    <h3>No important files</h3>
+}

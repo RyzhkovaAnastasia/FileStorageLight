@@ -1,0 +1,61 @@
+﻿@model BLL.Models.RoleModel
+@using Microsoft.AspNet.Identity.EntityFramework;
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Edit roles</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Roles for @Model.UserName</h4>
+        <hr />
+        <div class="text-warning">
+            <p>Warnings:</p>
+            <ul>
+                <li><p class="text-warning">managers cannot manage another manages;</p></li>
+                <li><p class="text-warning">account without roles has readonly access.</p></li>
+            </ul>
+        </div>
+        <hr />
+       
+        <div>
+            <input type="hidden" name="userId" value="@Model.UserId" />
+
+            <div class="form-group">
+                @foreach (IdentityRole role in Model.AllRoles)
+                {
+
+                    <input type="checkbox" name="roles" value="@role.Name" id="@role.Id"
+                           @(Model.UserRoles.Contains(role.Name) ? "checked=\"checked\"" : "") />
+                    <label for="@role.Id">@role.Name</label>
+                    <br />
+                }
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Save" class="btn btn-default" />
+                </div>
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div><span class="text-success">@ViewBag.Message</span></div>
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    <p>
+        @Html.ActionLink("Back", null, null, null, new {href = Request.UrlReferrer})
+    </p>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
