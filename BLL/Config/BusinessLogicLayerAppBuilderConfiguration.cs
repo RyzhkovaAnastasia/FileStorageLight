@@ -21,6 +21,7 @@ namespace BLL.Config
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
                 SlidingExpiration = false, 
+                LoginPath = new PathString("/User/Login"),
                 AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
                 Provider = new CookieAuthenticationProvider
                 {
