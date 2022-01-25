@@ -12,10 +12,13 @@
 <div>
     <span>Enter file name: </span>
     <input type="text" id="name" name="name">
+    <br />
     <label for="isTypeFilter">Sort By type</label>
-    <input type="radio" id="isTypeFilter" @(ViewBag.IsTypeFilterOn ? "checked=\"checked\"" : "")>
+    <input type="checkbox" id="isTypeFilter" name="isTypeFilter" @(ViewBag.IsTypeFilterOn ? "checked=\"checked\"" : "")>
+    <br />
     <label for="isDateFilter">Sort By date</label>
-    <input type="radio" id="isDateFilter" @(ViewBag.IsDateFilterOn ? "checked=\"checked\"" : "")>
+    <input type="checkbox" id="isDateFilter" name="isDateFilter" @ViewBag.IsDateFilterOn @(ViewBag.IsDateFilterOn ? "checked=\"checked\"" : "")>
+    <br />
     <input type="submit" value="Search" />
 
 </div>

@@ -7,6 +7,17 @@
 
 <h2>Users accounts</h2>
 <hr />
+@using (Html.BeginForm("Users", "User", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+<div>
+    <span>Enter file name: </span>
+    <input type="text" id="name" name="name">
+    <input type="submit" value="Search" />
+
+</div>
+    <br />
+}
 <p>@Html.ActionLink("Create new user", "Create", "User", null)</p>
 @if (!Model.Any())
 {

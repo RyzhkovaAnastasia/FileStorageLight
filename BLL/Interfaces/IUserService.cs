@@ -55,5 +55,7 @@ namespace BLL.Interfaces
         /// <param name="userId">user id</param>
         Task DeleteUserAsync(string userId);
 
+        IEnumerable<UserModel> SearchByName(string name);
+
     }
 }

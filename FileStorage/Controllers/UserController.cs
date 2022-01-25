@@ -4,6 +4,7 @@ using BLL.Exceptions;
 using BLL.Interfaces;
 using BLL.Models;
 using System.Web.Mvc;
+using System.Collections.Generic;
 
 namespace FileStorage.Controllers
 {
@@ -119,6 +120,20 @@ namespace FileStorage.Controllers
             return View(users);
         }
 
+        [HttpPost]
+        [Authorize(Roles = "Manager")]
+        public ActionResult Users(string name)
+        {
+            IEnumerable<UserModel> users;
+            if (string.IsNullOrEmpty(name))
+            {
+                users = _userService.GetAllUsers(UserId);
+            }
+            users = _userService.SearchByName(name);
+            return View(users);
+        }
+
+
         /// <summary>
         /// Representation for user registration
         /// </summary>
@@ -199,5 +214,8 @@ namespace FileStorage.Controllers
             await _userService.DeleteUserAsync(userId);
             return Redirect(Request.UrlReferrer?.ToString());
         }
+
+
+    
     }
 }

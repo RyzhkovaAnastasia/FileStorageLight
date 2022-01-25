@@ -26,7 +26,7 @@ namespace DAL.Interfaces
         /// </summary>
         /// <param name="name">Part of file name</param>
         /// <returns>File collection</returns>
-        ICollection<File> GetByName(string name);
+        ICollection<File> GetByName(string name, bool isDateSort, bool isTypeSort);
 
         /// <summary>
         /// Create file short URN for access file by link
@@ -66,7 +66,5 @@ namespace DAL.Interfaces
 
         Task<string> GetFullVirtualLocationPath(Guid id);
         Task<string> GetFileOwner(Guid id);
-        ICollection<File> GetByNameTypeFilter(string name);
-        ICollection<File> GetByNameDateFilter(string name);
     }
 }

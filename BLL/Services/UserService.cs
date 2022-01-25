@@ -190,5 +190,11 @@ namespace BLL.Services
             _authenticationManager.SignIn(authProperties, claims);
             
         }
+
+        public IEnumerable<UserModel> SearchByName(string name)
+        {
+            var users = _authUnitOfWork.UserManager.Users.Where(f => f.UserName.ToLower().Contains(name.ToLower())).ToList();
+            return _mapper.Map<List<UserModel>>(users);
+        }
     }
 }

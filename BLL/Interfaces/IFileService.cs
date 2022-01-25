@@ -38,7 +38,7 @@ namespace BLL.Interfaces
         /// </summary>
         /// <param name="name">part of file name</param>
         /// <returns>file list</returns>
-        IEnumerable<FileModel> GetByName(string name);
+        IEnumerable<FileModel> GetByName(string name, bool isDateSort, bool isTypeSort);
         /// <summary>
         /// GetAsync file by short query URN
         /// </summary>
@@ -100,7 +100,5 @@ namespace BLL.Interfaces
         /// <param name="physicalPath"></param>
         /// <returns>bytes array of the file</returns>
         Task<byte[]> DownloadFile(Guid id, string physicalPath);
-        IEnumerable<FileModel> GetByNameDateFilter(string name);
-        IEnumerable<FileModel> GetByNameTypeFilter(string name);
     }
 }

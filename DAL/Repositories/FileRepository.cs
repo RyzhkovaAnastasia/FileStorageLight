@@ -123,22 +123,25 @@ namespace DAL.Repositories
         }
 
         /// <inheritdoc />
-        public ICollection<File> GetByName(string name)
+        public ICollection<File> GetByName(string name, bool isDateSort, bool isTypeSort)
         {
             _context.Files.Load();
-            return _context.Files.Local.Where(f => f.Name.ToLower().Contains(name.ToLower())).ToList();
-        }
-
-        public ICollection<File> GetByNameTypeFilter(string name)
-        {
-            _context.Files.Load();
-            return _context.Files.Local.Where(f => f.Name.ToLower().Contains(name.ToLower())).OrderBy(x=>x.Type).ToList();
-        }
-
-        public ICollection<File> GetByNameDateFilter(string name)
-        {
-            _context.Files.Load();
-            return _context.Files.Local.Where(f => f.Name.ToLower().Contains(name.ToLower())).OrderBy(x=>x.UploadDate).ToList();
+            if (!isDateSort && !isTypeSort)
+            {
+                return _context.Files.Local.Where(f => f.Name.ToLower().Contains(name.ToLower())).ToList();
+            }
+            else if(isDateSort && isTypeSort)
+            {
+                return _context.Files.Local.Where(f => f.Name.ToLower().Contains(name.ToLower())).OrderBy(x=>x.UploadDate).ThenBy(x=>x.Type).ToList();
+            }
+            else if(isDateSort)
+            {
+                return _context.Files.Local.Where(f => f.Name.ToLower().Contains(name.ToLower())).OrderBy(x=>x.UploadDate).ToList();
+            }
+            else
+            {
+                return _context.Files.Local.Where(f => f.Name.ToLower().Contains(name.ToLower())).OrderBy(x => x.Type).ToList();
+            }
         }
 
         /// <inheritdoc />

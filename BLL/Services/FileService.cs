@@ -150,21 +150,9 @@ namespace BLL.Services
         }
 
         /// <inheritdoc />
-        public IEnumerable<FileModel> GetByName(string name)
+        public IEnumerable<FileModel> GetByName(string name, bool isDateSort, bool isTypeSort)
         {
-            IEnumerable<File> files = _unitOfWork.FileRepository.GetByName(name);
-            return _mapper.Map<IEnumerable<FileModel>>(files);
-        }
-
-        public IEnumerable<FileModel> GetByNameDateFilter(string name)
-        {
-            IEnumerable<File> files = _unitOfWork.FileRepository.GetByNameDateFilter(name);
-            return _mapper.Map<IEnumerable<FileModel>>(files);
-        }
-
-        public IEnumerable<FileModel> GetByNameTypeFilter(string name)
-        {
-            IEnumerable<File> files = _unitOfWork.FileRepository.GetByNameTypeFilter(name);
+            IEnumerable<File> files = _unitOfWork.FileRepository.GetByName(name, isDateSort, isTypeSort);
             return _mapper.Map<IEnumerable<FileModel>>(files);
         }
 

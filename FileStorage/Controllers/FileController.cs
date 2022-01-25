@@ -189,27 +189,14 @@ namespace FileStorage.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Manager")]
-        public async Task<ActionResult> SearchByName(string name, bool isDateFilter, bool isTypeFilter)
+        public ActionResult SearchByName(string name, string isDateFilter = "off", string isTypeFilter = "off")
         {
+            var isDateSort = ViewBag.IsDateFilterOn = isDateFilter == "on";
+            var isTypeSort = ViewBag.IsTypeFilterOn = isTypeFilter == "on";
+
             IEnumerable<FileModel> files;
-            if (string.IsNullOrEmpty(name))
-            {
-                files = await _fileService.GetAll();
-            }
-            else
-            {
-                if (!isDateFilter && !isTypeFilter)
-                {
-                    files = _fileService.GetByName(name);
-                }else if (!isTypeFilter)
-                {
-                    files = _fileService.GetByNameDateFilter(name);
-                }
-                else
-                {
-                    files = _fileService.GetByNameTypeFilter(name);
-                }
-            }
+            files = _fileService.GetByName(name, isDateSort, isTypeSort);
+            
             return View(files);
         }
 
