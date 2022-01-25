@@ -169,11 +169,9 @@ namespace DAL.Repositories
                 return;
             }
 
-            item.ParentDirectoryId = dir.ParentDirectoryId;
-            item.ParentDirectory = dir.ParentDirectory;
+            dir.Name = item.Name;
+            dir.Description = item.Description;
 
-            var index = _context.Directories.Local.IndexOf(dir);
-            _context.Directories.Local[index] = item;
             
             await _context.SaveChangesAsync();
         }

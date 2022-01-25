@@ -133,8 +133,8 @@ namespace BLL.Services
 
         private async Task UpdatePhysicalDirectory(string physicalUserPath, Directory newDir, Directory oldDir)
         {
-            var fullOldPath = _fileSystem.Path.Combine(physicalUserPath, oldDir.Location, oldDir.Name);
-            var fullNewPath = _fileSystem.Path.Combine(physicalUserPath, newDir.Location, newDir.Name);
+            var fullOldPath = _fileSystem.Path.Combine(physicalUserPath, oldDir.Location ?? string.Empty, oldDir.Name);
+            var fullNewPath = _fileSystem.Path.Combine(physicalUserPath, newDir.Location ?? string.Empty, newDir.Name);
 
             if (_fileSystem.Directory.Exists(fullNewPath))
             {

@@ -17,9 +17,13 @@
     </p>
 }
 <hr />
-@if (@Model.Directory.ParentDirectoryId != Guid.Empty)
+@if (!string.IsNullOrEmpty(@Model.Directory.Location))
 {
-    <h4 class="text-info">@Model.Directory.ApplicationUser.UserName: MyStorage\@Model.Directory.Location</h4>
+    <h4 class="text-info">@Model.Directory.ApplicationUser.UserName: MyStorage\@Model.Directory.Location\@Model.Directory.Name</h4>
+}
+else if(Model.Directory.ParentDirectoryId != Guid.Empty)
+{
+<h4 class="text-info">@Model.Directory.ApplicationUser.UserName: MyStorage\@Model.Directory.Name</h4>
 }
 else
 {
