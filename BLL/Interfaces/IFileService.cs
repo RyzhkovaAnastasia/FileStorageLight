@@ -100,5 +100,7 @@ namespace BLL.Interfaces
         /// <param name="physicalPath"></param>
         /// <returns>bytes array of the file</returns>
         Task<byte[]> DownloadFile(Guid id, string physicalPath);
+        IEnumerable<FileModel> GetByNameDateFilter(string name);
+        IEnumerable<FileModel> GetByNameTypeFilter(string name);
     }
 }

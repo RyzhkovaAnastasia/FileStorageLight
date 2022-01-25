@@ -174,6 +174,9 @@ namespace FileStorage.Controllers
         [Authorize(Roles = "Manager")]
         public async Task<ActionResult> SearchByName()
         {
+            ViewBag.IsDateFilterOn = false;
+            ViewBag.IsTypeFilterOn = false;
+
             var files = await _fileService.GetAll();
             return View(files);
         }
@@ -186,7 +189,7 @@ namespace FileStorage.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Manager")]
-        public async Task<ActionResult> SearchByName(string name)
+        public async Task<ActionResult> SearchByName(string name, bool isDateFilter, bool isTypeFilter)
         {
             IEnumerable<FileModel> files;
             if (string.IsNullOrEmpty(name))
@@ -195,7 +198,17 @@ namespace FileStorage.Controllers
             }
             else
             {
-                files = _fileService.GetByName(name);
+                if (!isDateFilter && !isTypeFilter)
+                {
+                    files = _fileService.GetByName(name);
+                }else if (!isTypeFilter)
+                {
+                    files = _fileService.GetByNameDateFilter(name);
+                }
+                else
+                {
+                    files = _fileService.GetByNameTypeFilter(name);
+                }
             }
             return View(files);
         }

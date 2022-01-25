@@ -66,5 +66,7 @@ namespace DAL.Interfaces
 
         Task<string> GetFullVirtualLocationPath(Guid id);
         Task<string> GetFileOwner(Guid id);
+        ICollection<File> GetByNameTypeFilter(string name);
+        ICollection<File> GetByNameDateFilter(string name);
     }
 }

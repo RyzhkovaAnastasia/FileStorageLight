@@ -156,6 +156,18 @@ namespace BLL.Services
             return _mapper.Map<IEnumerable<FileModel>>(files);
         }
 
+        public IEnumerable<FileModel> GetByNameDateFilter(string name)
+        {
+            IEnumerable<File> files = _unitOfWork.FileRepository.GetByNameDateFilter(name);
+            return _mapper.Map<IEnumerable<FileModel>>(files);
+        }
+
+        public IEnumerable<FileModel> GetByNameTypeFilter(string name)
+        {
+            IEnumerable<File> files = _unitOfWork.FileRepository.GetByNameTypeFilter(name);
+            return _mapper.Map<IEnumerable<FileModel>>(files);
+        }
+
         /// <inheritdoc />
         public async Task UpdateAsync(FileModel file, string physicalPath)
         {

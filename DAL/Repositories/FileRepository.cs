@@ -129,6 +129,18 @@ namespace DAL.Repositories
             return _context.Files.Local.Where(f => f.Name.ToLower().Contains(name.ToLower())).ToList();
         }
 
+        public ICollection<File> GetByNameTypeFilter(string name)
+        {
+            _context.Files.Load();
+            return _context.Files.Local.Where(f => f.Name.ToLower().Contains(name.ToLower())).OrderBy(x=>x.Type).ToList();
+        }
+
+        public ICollection<File> GetByNameDateFilter(string name)
+        {
+            _context.Files.Load();
+            return _context.Files.Local.Where(f => f.Name.ToLower().Contains(name.ToLower())).OrderBy(x=>x.UploadDate).ToList();
+        }
+
         /// <inheritdoc />
         public async Task UpdateAsync(File item)
         {
